@@ -16,7 +16,7 @@ Using `Nginx` Ingress controller to tie both the static and dynamic containers.
 ### 1. Building & pushing the docker images
 Clone the repository
 ```bash
-    #Building the static docker image & prior to build we need to unzip the static files and copy it to web folder present under docker-static.
+    #Building the static docker image & prior to build we need to unzip the static files and copy it to web folder present under docker-static directory.
     docker login #Login/Authentication to Dockerhub account
     cd docker-static;
     docker build -t bobbyraj007/docker-static:thoughtworks-v3 .
