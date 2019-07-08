@@ -28,10 +28,10 @@ Clone the repository
     docker push bobbyraj007/tomcat-war:thoughtworks-v1
 ```
 
-> Note : I'm using the `tomcat base image` for deploying the war file, we can also use the `alpine` version of `tomcat` to make the container light-weight
+> Note: I'm using the `tomcat base image` for deploying the war file, we can also use the `alpine` version of `tomcat` to make the container light-weight.
 
 ### 2. Deploying the above build docker images using kubernetes
-Make sure `kubectl` is installed and `kubeconfig` file is configured for the targeted kubernetes cluster
+Make sure `kubectl` is installed and `kubeconfig` file is configured for the targeted kubernetes cluster.
 ```bash
     #Create a namespace
     kubectl create ns java-app
@@ -47,14 +47,14 @@ Make sure `kubectl` is installed and `kubeconfig` file is configured for the tar
 
  ### 3. install nginx ingress controller on the cluster
  
- we can leverage helm for installing Nginx ingress controller and it only takes couple of commands to setup `nginx ingress controller` 
+ we can leverage helm for installing Nginx ingress controller and it only takes couple of commands to setup `nginx ingress controller` .
  
  If your Kubernetes cluster has RBAC enabled, from the Cloud Shell, deploy an NGINX controller Deployment and Service by running the following command:
  ```bash
   helm install --name nginx-ingress stable/nginx-ingress --set rbac.create=true --set controller.publishService.enabled=true
   ```
  
- Deploy NGINX Ingress Controller with RBAC disabled
+ Deploy NGINX Ingress Controller with RBAC disabled.
  If your Kubernetes cluster has RBAC disabled, from the Cloud Shell, deploy an NGINX controller Deployment and Service by running the following command:
   ```bash
    helm install --name nginx-ingress stable/nginx-ingress
@@ -76,5 +76,5 @@ Make sure `kubectl` is installed and `kubeconfig` file is configured for the tar
     kubectl apply -f ingress.yaml 
 ```
 
-After creating a ingress it will provide the `loadbalancer url` which can be used for smoke testing and we can also configure ingress with the `tls` certificate to make it accessible over https. </br>
-> Note : we can club the two ingress rules i.e. `styles` & `images` in one by keeping all the static content under one folder & updating the path in the codebase for war.
+After setting up the ingress, it will provide the `loadbalancer url` which can be used for smoke testing and also we can configure ingress with the `tls` certificate to make it accessible over https. </br>
+> Note: we can club the two ingress rules i.e. `styles` & `images` in one by keeping all the static content under one folder & updating the path in the codebase for war.
