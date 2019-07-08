@@ -1,0 +1,35 @@
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: docker-dynamic-deployment
+   labels:
+     app: docker-dynamic
+ spec:
+   replicas: 1
+   selector:
+     matchLabels:
+       app: docker-dynamic
+   template:
+     metadata:
+       labels:
+         app: docker-dynamic
+     spec:
+       containers:
+       - name: docker-dynamic
+         image: bobbyraj007/tomcat-war:thoughtworks-v1
+         ports:
+         - containerPort: 8080
+
+ ---
+ kind: Service
+ apiVersion: v1
+ metadata:
+   name: docker-dynamic-service
+ spec:
+   selector:
+     app: docker-dynamic
+   ports:
+   - protocol: TCP
+     port: 80
+     targetPort: 8080
+   type: ClusterIP

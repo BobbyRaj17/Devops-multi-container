@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-static-deployment
+  labels:
+    app: docker-static
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-static
+  template:
+    metadata:
+      labels:
+        app: docker-static
+    spec:
+      containers:
+      - name: docker-static
+        image: bobbyraj007/docker-static:thoughtworks
+        ports:
+        - containerPort: 90
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: docker-static-service
+spec:
+  selector:
+    app: docker-static
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 90
+  type: ClusterIP
