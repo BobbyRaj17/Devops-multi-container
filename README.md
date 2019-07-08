@@ -16,13 +16,14 @@ Using `Nginx` Ingress controller to tie both the static and dynamic containers.
 ### 1. Building & pushing the docker images
 Clone the repository
 ```bash
-    #Building the static docker image & prior to build we need to unzip the static files and copy it to web folder present under docker-static
-    docker login #Login/Authentication to Dockerhub account 
+    #Building the static docker image & prior to build we need to unzip the static files and copy it to web folder present under docker-static.
+    docker login #Login/Authentication to Dockerhub account
     cd docker-static;
     docker build -t bobbyraj007/docker-static:thoughtworks-v3 .
     docker push bobbyraj007/docker-static:thoughtworks-v3
     
-    #Building the dynamic docker image
+    #Building the dynamic docker image 
+    #Copy the provided war file to docker-dynamic directory before building the docker image.
     cd docker-dynamic
     docker build -t bobbyraj007/tomcat-war:thoughtworks-v1 .
     docker push bobbyraj007/tomcat-war:thoughtworks-v1
@@ -36,11 +37,11 @@ Make sure `kubectl` is installed and `kubeconfig` file is configured for the tar
     #Create a namespace
     kubectl create ns java-app
     
-    # Deploying the static container
+    #Deploying the static container
     cd k8s
     kubectl apply -f docker-static.yaml -n java-app
     
-    # Deploying the Dynamic Container
+    #Deploying the Dynamic Container
     kubectl apply -f tomcat-dynamic.yaml -n java-app
 ```
 > Note:  we can create a helm chart for above kubernetes configurations.
