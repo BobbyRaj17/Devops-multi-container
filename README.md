@@ -1,4 +1,4 @@
-# DevOps multi-container setup for dynamic and static part of the application
+# DevOps multi-container setup using kubernetes
 Deploy static assets and the war file containing dynamic part of application separately.
 
 ## Prerequisites
@@ -9,14 +9,14 @@ Your system needs the `kubectl` ,`kubernetes cluster` &`helm`:
 - [Docker hub account](https://hub.docker.com/)
 
 
-##Proposed solution
+## Proposed solution
 I'm building separate container for both static and dynamic part as per the requirement and will be deploying it over kubernetes Cluster.</br>
 Using `Nginx` Ingress controller to tie both the static and dynamic containers.
 
 ### 1. Building & pushing the docker images
 Clone the repository
 ```bash
-    #Building the static docker image & prior to build we need to unzip the static files and copy it to web folder under docker static
+    #Building the static docker image & prior to build we need to unzip the static files and copy it to web folder present under docker-static
     docker login #Login/Authentication to Dockerhub account 
     cd docker-static;
     docker build -t bobbyraj007/docker-static:thoughtworks-v3 .
@@ -31,7 +31,7 @@ Clone the repository
 > Note : I'm using the `tomcat base image` for deploying the war file, we can also use the `alpine` version of `tomcat` to make the container light-weight
 
 ### 2. Deploying the above build docker images using kubernetes
-Make sure `kubectl` is installed and `kubeconfig` file is configured for the target kubernetes cluster
+Make sure `kubectl` is installed and `kubeconfig` file is configured for the targeted kubernetes cluster
 ```bash
     #Create a namespace
     kubectl create ns java-app
@@ -43,6 +43,7 @@ Make sure `kubectl` is installed and `kubeconfig` file is configured for the tar
     # Deploying the Dynamic Container
     kubectl apply -f tomcat-dynamic.yaml -n java-app
 ```
+> Note:  we can create a helm chart for above kubernetes configurations.
 
  ### 3. install nginx ingress controller on the cluster
  
@@ -75,5 +76,5 @@ Make sure `kubectl` is installed and `kubeconfig` file is configured for the tar
     kubectl apply -f ingress.yaml 
 ```
 
-After creating a ingress it will provide the loadbalancer url which can be used for smoke testing
+After creating a ingress it will provide the `loadbalancer url` which can be used for smoke testing and we can also configure ingress with the `tls` certificate to make it accessible over https. </br>
 > Note : we can club the two ingress rules i.e. `styles` & `images` in one by keeping all the static content under one folder & updating the path in the codebase for war.
